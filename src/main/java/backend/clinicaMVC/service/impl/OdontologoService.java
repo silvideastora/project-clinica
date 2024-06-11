@@ -2,6 +2,7 @@ package backend.clinicaMVC.service.impl;
 
 import backend.clinicaMVC.dao.IDao;
 import backend.clinicaMVC.model.Odontologo;
+import backend.clinicaMVC.model.Paciente;
 import backend.clinicaMVC.service.IOdontologoService;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,14 @@ public class OdontologoService implements IOdontologoService {
     }
     public List<Odontologo> buscarTodosOdontologos(){
         return odontologoIDao.buscarTodos();
+    }
+
+    public void actualizarOdontologo(Odontologo odontologo) {
+        odontologoIDao.actualizar(odontologo);
+    }
+
+
+    public void eliminarOdontologo(Integer id) {
+        odontologoIDao.eliminar(id);
     }
 }

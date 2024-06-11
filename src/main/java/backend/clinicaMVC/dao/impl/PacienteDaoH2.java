@@ -155,7 +155,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             connection = H2Connection.getConnection();
             connection.setAutoCommit(false);
 
-            domicilioDaoH2.actualizar(paciente.getDomicilio());
+            domicilioDaoH2.actualizar((paciente.getDomicilio()));
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE);
             preparedStatement.setString(1, paciente.getApellido());
@@ -198,6 +198,7 @@ public class PacienteDaoH2 implements IDao<Paciente> {
         try{
             connection = H2Connection.getConnection();
             connection.setAutoCommit(false);
+
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE);
             preparedStatement.setInt(1, id);
