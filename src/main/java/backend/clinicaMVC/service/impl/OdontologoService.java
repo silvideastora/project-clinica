@@ -1,46 +1,42 @@
 package backend.clinicaMVC.service.impl;
 
-import backend.clinicaMVC.dao.IDao;
-import backend.clinicaMVC.model.Odontologo;
-import backend.clinicaMVC.model.Paciente;
+
+import backend.clinicaMVC.entity.Odontologo;
+
+import backend.clinicaMVC.repository.IOdontologoRepository;
 import backend.clinicaMVC.service.IOdontologoService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OdontologoService implements IOdontologoService {
-    private IDao<Odontologo> odontologoIDao;
 
-    public OdontologoService(IDao<Odontologo> odontologoIDao) {
-        this.odontologoIDao = odontologoIDao;
-    }
+    private IOdontologoRepository odontologoRepository;
 
-    public IDao<Odontologo> getOdontologoIDao() {
-        return odontologoIDao;
-    }
-
-    public void setOdontologoIDao(IDao<Odontologo> odontologoIDao) {
-        this.odontologoIDao = odontologoIDao;
+    public OdontologoService(IOdontologoRepository odontologoRepository) {
+        this.odontologoRepository = odontologoRepository;
     }
 
     public Odontologo agregarOdontologo(Odontologo odontologo){
-        return odontologoIDao.registrar(odontologo);
+        return odontologoRepository.save(odontologo);
     }
 
-    public Odontologo buscarUnOdontologo(int id){
-        return odontologoIDao.buscarPorId(id);
+    public Optional<Odontologo> buscarUnOdontologo(Integer id){
+        return odontologoRepository.findById(id);
     }
     public List<Odontologo> buscarTodosOdontologos(){
-        return odontologoIDao.buscarTodos();
+        return odontologoRepository.findAll();
     }
 
-    public void actualizarOdontologo(Odontologo odontologo) {
-        odontologoIDao.actualizar(odontologo);
+    @Override
+    public void modificarOdontologo(Odontologo odontologo) {
+        odontologoRepository.save(odontologo);
     }
 
-
+    @Override
     public void eliminarOdontologo(Integer id) {
-        odontologoIDao.eliminar(id);
+        odontologoRepository.deleteById(id);
     }
 }
