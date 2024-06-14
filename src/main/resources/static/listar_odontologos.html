@@ -63,6 +63,7 @@
     </div>
   </div>
 </nav>
+
 <div class="container-xl">
   <h1 class="mt-5">Odontologos</h1>
   <table class="table table-striped-columns" id="odontologosTable">
@@ -77,21 +78,56 @@
     <tbody></tbody>
   </table>
 </div>
-<div id="editForm" class="form-text" style="display: none;">
-  <input type="hidden" id="editId" class=form-control">
-  <div>
-    <label for="editNombre" class="form-label">Nombre:</label>
-    <input type="text" id="editNombre" class=form-control">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Odontólogo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario de edición -->
+        <form id="editForm">
+          <input type="hidden" id="editId" class="form-control">
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Nombre:</label>
+            <input type="text" id="editNombre" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="editApellido" class="form-label">Apellido:</label>
+            <input type="text" id="editApellido" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="editMatricula" class="form-label">Número de Matrícula:</label>
+            <input type="text" id="editMatricula" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="saveChanges" class="btn btn-success">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="editApellido" class="form-label">Apellido:</label>
-    <input type="text" id="editApellido" class=form-control">
+</div>
+<div id="mensaje" class="alert" style="display: none;"></div>
+<!-- Modal de confirmación para eliminar odontólogo -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro que desea eliminar este odontólogo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="editMatricula" class="form-label">Número de Matrícula:</label>
-    <input type="text" id="editMatricula" class=form-control">
-  </div>
-  <button id="saveChanges">Guardar Cambios</button>
 </div>
 <script src="js/modificar_odontologos.js"></script>
 <script src="js/listar_odontologos.js"></script>

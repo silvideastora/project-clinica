@@ -6,6 +6,7 @@ form.addEventListener("submit", function (event) {
   const nombre = document.getElementById("nombre").value;
   const apellido = document.getElementById("apellido").value;
   const matricula = document.getElementById("matricula").value;
+  const mensaje = document.getElementById("mensaje");
 
   // llamando al endpoint de agregar
 
@@ -19,10 +20,25 @@ form.addEventListener("submit", function (event) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      alert("Odontólogo agregado con éxito");
-      form.reset(); // Resetear el formulario
+            mensaje.textContent = "Odontólogo agregado con éxito";
+            mensaje.classList.add("alert-success");
+            mensaje.style.display = "block";
+            setTimeout(() => {
+              mensaje.textContent = "";
+              mensaje.classList.remove("alert-success");
+              mensaje.style.display = "none";
+            }, 3000);
+            form.reset();
     })
     .catch((error) => {
       console.error("Error agregando odontólogo:", error);
+            mensaje.textContent = "Error al agregar odontólogo";
+            mensaje.classList.add("alert-danger");
+            mensaje.style.display = "block";
+            setTimeout(() => {
+              mensaje.textContent = "";
+              mensaje.classList.remove("alert-danger");
+              mensaje.style.display = "none";
+            }, 3000);
     });
 });

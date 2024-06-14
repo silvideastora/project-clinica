@@ -33,9 +33,6 @@ function fetchOdontologos() {
       console.error("Error fetching data:", error);
     });
 
-  // modificar un odontologo
-
-  // eliminar un odontologo
 }
 
 fetchOdontologos();
