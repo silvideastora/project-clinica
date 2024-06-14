@@ -15,6 +15,7 @@ public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
     @ManyToOne
     Paciente paciente;
     @ManyToOne

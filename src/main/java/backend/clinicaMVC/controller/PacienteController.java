@@ -2,6 +2,7 @@ package backend.clinicaMVC.controller;
 
 
 import backend.clinicaMVC.entity.Paciente;
+import backend.clinicaMVC.exception.ResourceNotFoundException;
 import backend.clinicaMVC.service.IPacienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,8 @@ public class PacienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>  borrarPaciente(@PathVariable Integer id) {
+    public ResponseEntity<String>  borrarPaciente(@PathVariable Integer id) throws ResourceNotFoundException {
         pacienteService.eliminarPaciente(id);
-        return ResponseEntity.ok("paciente eliminado");
+        return ResponseEntity.ok("{\"message\": \"paciente eliminado\"}");
     }
 }

@@ -1,6 +1,7 @@
 package backend.clinicaMVC.service.impl;
 
 import backend.clinicaMVC.entity.Paciente;
+import backend.clinicaMVC.exception.ResourceNotFoundException;
 import backend.clinicaMVC.repository.IPacienteRepository;
 import backend.clinicaMVC.service.IPacienteService;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,11 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public void eliminarPaciente(Integer id) {
-        pacienteRepository.deleteById(id);
+    public void eliminarPaciente(Integer id) throws ResourceNotFoundException {
+        Optional<Paciente> pacienteOptional = buscarPorId(id);
+        if(pacienteOptional.isPresent())
+            pacienteRepository.deleteById(id);
+        else
+            throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
     }
 }

@@ -7,6 +7,8 @@ import backend.clinicaMVC.Dto.response.TurnoResponseDto;
 import backend.clinicaMVC.entity.Odontologo;
 import backend.clinicaMVC.entity.Paciente;
 import backend.clinicaMVC.entity.Turno;
+import backend.clinicaMVC.exception.BadRequestException;
+import backend.clinicaMVC.exception.ResourceNotFoundException;
 import backend.clinicaMVC.repository.IOdontologoRepository;
 import backend.clinicaMVC.repository.IPacienteRepository;
 import backend.clinicaMVC.repository.ITurnoRepository;
@@ -34,7 +36,7 @@ public class TurnoService implements ITurnoService {
     }
 
     @Override
-    public TurnoResponseDto registrar(TurnoRequestDto turnoRequestDto) {
+    public TurnoResponseDto registrar(TurnoRequestDto turnoRequestDto) throws BadRequestException {
         Optional<Paciente> paciente = pacienteRepository.findById(turnoRequestDto.getPaciente_id());
         Optional<Odontologo> odontologo = odontologoRepository.findById(turnoRequestDto.getOdontologo_id());
         Turno turnoARegistrar = new Turno();
@@ -47,6 +49,8 @@ public class TurnoService implements ITurnoService {
             turnoGuardado = turnoRepository.save(turnoARegistrar);
 
             turnoADevolver = mapToResponseDto(turnoGuardado);
+        } else {
+            throw new BadRequestException("{\"message\": \"turno no asignado\"}");
         }
         return turnoADevolver;
     }
@@ -90,8 +94,24 @@ public class TurnoService implements ITurnoService {
     }
 
     @Override
-    public void eliminarTurno(Integer id) {
-        turnoRepository.deleteById(id);
+    public void eliminarTurno(Integer id) throws ResourceNotFoundException{
+        TurnoResponseDto turnoResponseDto = buscarPorId(id);
+        if(turnoResponseDto !=null)
+            turnoRepository.deleteById(id);
+        else
+            throw new ResourceNotFoundException("{\"message\": \"turno no encontrado\"}");
+    }
+
+    @Override
+    public List<TurnoResponseDto> buscarTurnoEntreFechas(LocalDate startDate, LocalDate endDate) {
+        List<Turno> listadoTurnos = turnoRepository.buscarTurnoEntreFechas(startDate, endDate);
+        List<TurnoResponseDto> listadoARetornar = new ArrayList<>();
+        TurnoResponseDto turnoAuxiliar = null;
+        for (Turno turno: listadoTurnos){
+            turnoAuxiliar = mapToResponseDto(turno);
+            listadoARetornar.add(turnoAuxiliar);
+        }
+        return listadoARetornar;
     }
 
 

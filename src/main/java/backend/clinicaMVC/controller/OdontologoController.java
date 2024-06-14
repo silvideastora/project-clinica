@@ -1,6 +1,7 @@
 package backend.clinicaMVC.controller;
 
 import backend.clinicaMVC.entity.Odontologo;
+import backend.clinicaMVC.exception.ResourceNotFoundException;
 import backend.clinicaMVC.service.impl.OdontologoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,18 +45,28 @@ public class OdontologoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarOdontologo(@PathVariable Integer id){
-        Optional<Odontologo> odontologo = odontologoService.buscarUnOdontologo(id);
-        if(odontologo.isPresent()){
-            odontologoService.eliminarOdontologo(id);
-            return ResponseEntity.ok("{\"message\": \"odontologo eliminado\"}");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<String> eliminarOdontologo(@PathVariable Integer id) throws ResourceNotFoundException {
+        odontologoService.eliminarOdontologo(id);
+        return ResponseEntity.ok("{\"message\": \"odontologo eliminado\"}");
     }
 
     @GetMapping
     public ResponseEntity<List<Odontologo>> buscarTodos(){
         return ResponseEntity.ok(odontologoService.buscarTodosOdontologos());
+    }
+
+    @GetMapping("/apellido/{apellido}")
+    public ResponseEntity<List<Odontologo>> buscarPorApellido(@PathVariable String apellido){
+        List<Odontologo> listaOdontologos = odontologoService.buscarPorApellido(apellido);
+        if(listaOdontologos.size() > 0){
+            return ResponseEntity.ok(listaOdontologos);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<Odontologo>> buscarTodos(@PathVariable String nombre){
+        return ResponseEntity.ok(odontologoService.buscarPorNombre(nombre));
     }
 }

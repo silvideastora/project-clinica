@@ -1,4 +1,6 @@
+
 const tableBody = document.querySelector("#odontologosTable tbody");
+
 function fetchOdontologos() {
   // listando los odontologos
 

@@ -1,10 +1,13 @@
 package backend.clinicaMVC.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +23,8 @@ public class Odontologo {
     private String nroMatricula;
     private String nombre;
     private String apellido;
-    @OneToMany(mappedBy = "odontologo")
-    private List<Turno> turnos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Turno> turnoSet = new HashSet<>();
  }
