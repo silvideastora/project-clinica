@@ -64,11 +64,11 @@ function updateOdontologo() {
                     mensaje.style.display = "none";
                 }, 3000);
                 const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-                        editModal.hide();
+                editModal.hide();
     });
 
     // Ocultar el formulario
-    editForm.style.display = "none";
+    //editForm.style.display = "none";
 }
 
 // Añadir un listener para el botón de guardar cambios
