@@ -14,6 +14,8 @@ import backend.clinicaMVC.repository.IPacienteRepository;
 import backend.clinicaMVC.repository.ITurnoRepository;
 import backend.clinicaMVC.service.ITurnoService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ public class TurnoService implements ITurnoService {
     private IPacienteRepository pacienteRepository;
     private ITurnoRepository turnoRepository;
     private ModelMapper modelMapper;
+    private static Logger LOGGER = LoggerFactory.getLogger(TurnoService.class);
 
     public TurnoService(IOdontologoRepository odontologoRepository, IPacienteRepository pacienteRepository, ITurnoRepository turnoRepository, ModelMapper modelMapper) {
         this.odontologoRepository = odontologoRepository;
@@ -111,6 +114,20 @@ public class TurnoService implements ITurnoService {
             turnoAuxiliar = mapToResponseDto(turno);
             listadoARetornar.add(turnoAuxiliar);
         }
+        return listadoARetornar;
+    }
+
+    @Override
+    public List<TurnoResponseDto> buscarFechaPosterior(LocalDate startDate) {
+        List<Turno> turnosLista = turnoRepository.buscarFechaPosterior(startDate);
+        List<TurnoResponseDto> listadoARetornar = new ArrayList<>();
+        TurnoResponseDto turnoAuxiliar = null;
+        for(Turno turno: turnosLista){
+            turnoAuxiliar = mapToResponseDto(turno);
+            listadoARetornar.add(turnoAuxiliar);
+            LOGGER.info("Turno disponible fecha posterior" + turnoAuxiliar);
+        }
+
         return listadoARetornar;
     }
 

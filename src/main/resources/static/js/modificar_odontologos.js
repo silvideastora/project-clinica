@@ -75,59 +75,57 @@ function updateOdontologo() {
 document.querySelector("#saveChanges").addEventListener("click", updateOdontologo);
 function deleteOdontologo(id) {
     // Mostrar el modal de confirmación
-        const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-        confirmDeleteModal.show();
+    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    confirmDeleteModal.show();
 
-        // Manejar el clic en el botón "Eliminar" del modal de confirmación
-        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        confirmDeleteBtn.addEventListener('click', function() {
-            // Aquí se realiza la eliminación del odontólogo si el usuario confirma
-            const mensaje = document.getElementById("mensaje");
+    // Manejar el clic en el botón "Eliminar" del modal de confirmación
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const mensaje = document.getElementById("mensaje");
 
-            fetch(`/odontologo/${id}`, {
-                method: 'DELETE',
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('La response no esta OK');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Borrado:', data);
-                            // Mostrar la alerta de éxito
-                            mensaje.textContent = "Odontólogo eliminado exitosamente";
-                            mensaje.classList.add("alert-success");
-                            mensaje.style.display = "block";
-                            // Ocultar la alerta después de 3 segundos
-                            setTimeout(() => {
-                                mensaje.textContent = "";
-                                mensaje.classList.remove("alert-success");
-                                mensaje.style.display = "none";
-                            }, 3000);
-                            // Actualizar la lista de odontólogos
-                            fetchOdontologos();
-            })
-            .catch((error) => {
-                console.error('Error borrando odontologo:', error);
-                            // Mostrar la alerta de error si falla la eliminación
-                            mensaje.textContent = "Error al eliminar el odontólogo";
-                            mensaje.classList.add("alert-danger");
-                            mensaje.style.display = "block";
-                            // Ocultar la alerta de error después de 3 segundos
-                            setTimeout(() => {
-                                mensaje.textContent = "";
-                                mensaje.classList.remove("alert-danger");
-                                mensaje.style.display = "none";
-                            }, 3000);
-                        })
-                        .finally(() => {
-                            // Ocultar el modal de confirmación después de procesar la eliminación
-                            confirmDeleteModal.hide();
-            });
-
+    confirmDeleteBtn.addEventListener('click', function() {
+        // Realizar la eliminación del odontólogo si el usuario confirma
+        fetch(`/odontologo/${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La respuesta no está OK');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Borrado:', data);
+            // Mostrar la alerta de éxito
+            mensaje.textContent = "Odontólogo eliminado exitosamente";
+            mensaje.classList.add("alert-success");
+            mensaje.style.display = "block";
+            // Ocultar la alerta después de 3 segundos
+            setTimeout(() => {
+                mensaje.textContent = "";
+                mensaje.classList.remove("alert-success");
+                mensaje.style.display = "none";
+            }, 3000);
+            // Actualizar la lista de odontólogos
+            fetchOdontologos();
+        })
+        .catch((error) => {
+            console.error('Error borrando odontologo:', error);
+            // Mostrar la alerta de error si falla la eliminación
+            mensaje.textContent = "Error al eliminar el odontólogo";
+            mensaje.classList.add("alert-danger");
+            mensaje.style.display = "block";
+            // Ocultar la alerta de error después de 3 segundos
+            setTimeout(() => {
+                mensaje.textContent = "";
+                mensaje.classList.remove("alert-danger");
+                mensaje.style.display = "none";
+            }, 3000);
+        })
+        .finally(() => {
             // Ocultar el modal de confirmación después de procesar la eliminación
             confirmDeleteModal.hide();
         });
+    });
 }
+
 

@@ -3,7 +3,6 @@ package backend.clinicaMVC.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Table(name ="pacientes")
 public class Paciente {
@@ -30,7 +28,7 @@ public class Paciente {
     @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
-    @OneToMany(mappedBy = "paciente",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "paciente",  fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Turno> turnoSet = new HashSet<>();
 }

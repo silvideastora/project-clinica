@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         domicilio.setLocalidad("San Pedro");
         domicilio.setProvincia("Jujuy");
         paciente.setDomicilio(domicilio);
+        pacienteService.registrarPaciente(paciente);
     }
 
 

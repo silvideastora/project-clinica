@@ -13,4 +13,7 @@ public interface ITurnoRepository extends JpaRepository<Turno, Integer> {
     //Buscar turnos entre dos fechas
     @Query("Select t from Turno t where t.fecha BETWEEN :startDate and :endDate")
     List<Turno> buscarTurnoEntreFechas(@Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
+
+    @Query("Select t from Turno t where t.fecha > :startDate")
+    List<Turno> buscarFechaPosterior(@Param("startDate") LocalDate startdate);
 }

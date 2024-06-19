@@ -19,4 +19,5 @@ public interface ITurnoService {
 
     // HQL
     List<TurnoResponseDto> buscarTurnoEntreFechas(LocalDate startDate,LocalDate endDate);
+    List<TurnoResponseDto> buscarFechaPosterior(LocalDate startDate);
 }
